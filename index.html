@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="dark">
+<meta name="theme-color" content="#0d1028">
+<meta name="description" content="CodeQuest is a Python challenge game for secondary-school students.">
+<title>CodeQuest – Python Challenge Game</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to main content</a>
+
+<main id="main" class="app is-welcome">
+  <noscript>
+    <p class="card noscript">CodeQuest needs JavaScript to run. Please turn JavaScript on in your browser and reload this page.</p>
+  </noscript>
+
+  <!-- ============ SCREEN 1: WELCOME ============ -->
+  <section id="screen-welcome" class="card screen" aria-labelledby="welcome-title">
+    <div class="logo" aria-hidden="true">&lt;/&gt;</div>
+    <p class="eyebrow">Python challenge game</p>
+    <h1 id="welcome-title" tabindex="-1">CodeQuest</h1>
+    <p class="lead">
+      Beat short Python challenges, collect points, and find out which ideas you have mastered.
+    </p>
+    <ul class="chips" aria-label="About the game">
+      <li><span id="chip-challenges">5</span> challenges</li>
+      <li><span id="chip-hints">3</span> hints each</li>
+      <li>Up to <span id="chip-points">100</span> points</li>
+    </ul>
+    <p id="load-error" class="error-text" role="alert" hidden></p>
+    <button id="start-btn" type="button" class="btn btn-primary btn-large">Start Game</button>
+    <p class="small">Tip: hints can help when you are stuck, but each one costs points.</p>
+  </section>
+
+  <!-- ============ SCREEN 2: CHALLENGE ============ -->
+  <section id="screen-challenge" class="card screen" aria-labelledby="challenge-title" hidden>
+    <header class="topbar">
+      <p class="brand">CodeQuest</p>
+      <div class="stats">
+        <p class="stat">Score: <strong id="score">0</strong></p>
+        <p class="stat" id="progress-text">Challenge 1 of 5</p>
+      </div>
+    </header>
+
+    <div class="progress" id="progress" role="progressbar" aria-label="Game progress"
+         aria-valuemin="0" aria-valuemax="5" aria-valuenow="0" aria-valuetext="Challenge 1 of 5">
+      <div class="progress-fill" id="progress-fill"></div>
+    </div>
+
+    <p class="concept" id="concept">Concept</p>
+    <h2 id="challenge-title" tabindex="-1">Question</h2>
+
+    <pre class="code" id="code-block"><code id="code"></code></pre>
+
+    <form id="answer-form" novalidate>
+      <fieldset class="options-set" id="options-set">
+        <legend>Choose your answer</legend>
+        <div id="options" class="options"></div>
+      </fieldset>
+      <p id="form-message" class="error-text" aria-live="polite"></p>
+
+      <div class="hint-area">
+        <button id="hint-btn" type="button" class="btn btn-secondary" aria-disabled="false">Show hint</button>
+        <p class="small" id="hint-info"></p>
+      </div>
+      <ol id="hints" class="hints" aria-live="polite"></ol>
+
+      <div class="actions">
+        <button id="submit-btn" type="submit" class="btn btn-primary">Submit answer</button>
+      </div>
+    </form>
+
+    <!-- Focus moves here after an answer is submitted, so screen readers read the result.
+         Its name and description are set from the text inside (see script.js). -->
+    <div id="feedback" class="feedback" tabindex="-1" role="group" hidden></div>
+
+    <div class="actions">
+      <button id="next-btn" type="button" class="btn btn-primary" hidden>Next challenge</button>
+    </div>
+  </section>
+
+  <!-- ============ SCREEN 3: RESULTS ============ -->
+  <section id="screen-results" class="card screen" aria-labelledby="results-title" hidden>
+    <p class="eyebrow">Final results</p>
+    <h2 id="results-title" tabindex="-1">Game complete!</h2>
+    <p class="big-score">
+      <span id="final-score">0</span><span class="out-of"> / <span id="max-score">100</span> points</span>
+    </p>
+    <p id="results-message" class="lead"></p>
+
+    <h3>Your answers</h3>
+    <ol id="results-list" class="result-list"></ol>
+
+    <h3>Topics to revisit</h3>
+    <ul id="revisit-list" class="revisit-list"></ul>
+
+    <button id="restart-btn" type="button" class="btn btn-primary btn-large">Restart Game</button>
+  </section>
+</main>
+
+<script src="script.js"></script>
+</body>
+</html>

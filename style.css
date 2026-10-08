@@ -1,0 +1,430 @@
+/* =====================================================
+   CodeQuest – style.css (Version 2)
+   Sections: 1 Colours & settings, 2 Base, 3 Layout,
+   4 Buttons, 5 Challenge screen, 6 Feedback,
+   7 Results screen, 8 Accessibility helpers,
+   9 Small screens & zoom, 10 Motion
+   Colours are unchanged from Version 1 (checked against
+   WCAG 2.2 AA contrast).
+   ===================================================== */
+
+/* ---------- 1. Colours & settings (change them here only) ---------- */
+:root {
+  --bg-0: #0d1028;
+  --bg-1: #1b1750;
+  --surface: #171b3a;
+  --surface-2: #0a0d22;
+  --surface-3: #262a66;
+  --border: #3a4088;
+  --option-border: #6c73c9;
+  --text: #f3f4ff;
+  --muted: #bcc0ea;
+  --primary: #5b3df5;
+  --primary-hover: #4a2dd8;
+  --on-primary: #ffffff;
+  --outline-btn: #8f96ff;
+  --accent: #5eead4;
+  --track: #2a2f66;
+  --good: #4ade9f;
+  --good-bg: #173a3b;
+  --bad: #ff93a3;
+  --bad-bg: #3a1c36;
+  --warn: #ffd166;
+  --focus: #ffd166;
+  --radius: 16px;
+  --font-body: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-code: ui-monospace, "SF Mono", Consolas, "Liberation Mono", "Courier New", monospace;
+}
+
+/* ---------- 2. Base ---------- */
+*, *::before, *::after { box-sizing: border-box; }
+
+html {
+  font-size: 100%;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  min-height: 100dvh;
+  font-family: var(--font-body);
+  font-size: clamp(1rem, 0.95rem + 0.3vw, 1.125rem);
+  line-height: 1.6;
+  color: var(--text);
+  background-color: var(--bg-0);
+  background-image:
+    radial-gradient(60rem 30rem at 85% -10%, rgba(91, 61, 245, 0.35), transparent 60%),
+    radial-gradient(40rem 25rem at -10% 110%, rgba(94, 234, 212, 0.18), transparent 60%),
+    linear-gradient(160deg, var(--bg-0), var(--bg-1));
+  /* Long words can never push the page wider than the screen. */
+  overflow-wrap: break-word;
+}
+
+h1, h2, h3, p { margin-top: 0; }
+
+/* Headings wrap at any width. "word-break: break-word" is the fallback for older
+   browsers; "overflow-wrap: anywhere" is the modern version. */
+h1, h2, h3 {
+  max-width: 100%;
+  word-break: break-word;
+  overflow-wrap: anywhere;
+  -webkit-hyphens: auto;
+  hyphens: auto;
+}
+
+/* Responsive type: fluid between a small minimum and a comfortable maximum.
+   The minimums are low enough to survive 200% text zoom on a 320px phone. */
+h1 { font-size: clamp(1.75rem, 1.1rem + 4.5vw, 3.5rem); line-height: 1.15; margin-bottom: 0.75rem; }
+h2 { font-size: clamp(1.15rem, 1rem + 1.6vw, 1.6rem); line-height: 1.3; margin-bottom: 1rem; }
+h3 { font-size: 1.1rem; line-height: 1.3; margin: 1.75rem 0 0.75rem; }
+
+[hidden] { display: none !important; }
+
+/* ---------- 3. Layout ---------- */
+/* .app fills the screen height. On the welcome screen (class is-welcome, set by
+   script.js) its content is centred vertically; on other screens it starts at the top
+   so the page does not jump while the content changes. */
+.app {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 46rem;
+  min-height: 100vh;
+  min-height: 100dvh;
+  margin-inline: auto;
+  padding: clamp(0.75rem, 4vw, 3rem) clamp(0.5rem, 3vw, 1rem);
+}
+.app.is-welcome { justify-content: center; }
+.app > * { min-width: 0; }
+
+.card {
+  min-width: 0;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: clamp(1rem, 4vw, 2.25rem);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.35);
+}
+
+.noscript { color: var(--warn); }
+
+.logo {
+  display: inline-grid;
+  place-items: center;
+  width: 4rem;
+  height: 4rem;
+  margin-bottom: 1rem;
+  border-radius: 1rem;
+  background: var(--primary);
+  color: var(--on-primary);
+  font-family: var(--font-code);
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+.eyebrow {
+  margin-bottom: 0.25rem;
+  color: var(--accent);
+  font-size: 0.9rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  overflow-wrap: anywhere;
+}
+
+.lead { color: var(--muted); font-size: 1.1em; }
+.small { color: var(--muted); font-size: 0.9rem; margin-bottom: 0; }
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin: 1.25rem 0 1.75rem;
+  padding: 0;
+  list-style: none;
+}
+.chips li {
+  max-width: 100%;
+  padding: 0.35rem 0.9rem;
+  border-radius: 999px;
+  background: var(--surface-3);
+  color: #e3e5ff;
+  font-size: 0.95rem;
+  font-weight: 600;
+  overflow-wrap: anywhere;
+}
+
+.error-text { color: var(--bad); font-weight: 600; margin-bottom: 0.75rem; }
+.error-text:empty { display: none; }
+
+/* ---------- 4. Buttons ---------- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  max-width: 100%;
+  min-height: 48px;
+  padding: 0.7rem 1.5rem;
+  border: 2px solid transparent;
+  border-radius: 999px;
+  font: inherit;
+  font-weight: 700;
+  line-height: 1.2;
+  text-align: center;
+  white-space: normal;          /* long labels wrap instead of overflowing */
+  overflow-wrap: anywhere;
+  cursor: pointer;
+}
+.btn-large { min-height: 56px; padding-inline: clamp(1rem, 6vw, 2.25rem); font-size: 1.1rem; }
+.btn-primary { background: var(--primary); color: var(--on-primary); }
+.btn-primary:hover { background: var(--primary-hover); }
+.btn-secondary { background: transparent; color: #e3e5ff; border-color: var(--outline-btn); }
+.btn-secondary:hover { background: var(--surface-3); }
+.btn[aria-disabled="true"],
+.btn:disabled { opacity: 0.6; cursor: not-allowed; }
+.btn[aria-disabled="true"]:hover { background: transparent; }
+
+:focus-visible { outline: 3px solid var(--focus); outline-offset: 3px; }
+
+.actions { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-top: 1.25rem; }
+
+/* ---------- 5. Challenge screen ---------- */
+.topbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem 1rem;
+  margin-bottom: 0.75rem;
+}
+.brand { margin: 0; font-weight: 800; letter-spacing: 0.02em; }
+.stats { display: flex; flex-wrap: wrap; gap: 0.25rem 1.25rem; }
+.stat { margin: 0; color: var(--muted); font-weight: 600; }
+.stat strong { display: inline-block; color: var(--text); font-size: 1.2em; }
+
+.progress {
+  height: 0.75rem;
+  margin-bottom: 1.5rem;
+  border-radius: 999px;
+  background: var(--track);
+  overflow: hidden;
+}
+.progress-fill { width: 0; height: 100%; border-radius: 999px; background: var(--accent); }
+
+.concept {
+  display: inline-block;
+  max-width: 100%;
+  margin-bottom: 0.5rem;
+  padding: 0.15rem 0.75rem;
+  border: 1px solid var(--option-border);
+  border-radius: 999px;
+  color: var(--muted);
+  font-size: 0.9rem;
+  font-weight: 600;
+  overflow-wrap: anywhere;
+}
+
+.code {
+  margin: 0 0 1.25rem;
+  padding: 1rem 1.1rem;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--surface-2);
+  color: #e6e8ff;
+  font-family: var(--font-code);
+  font-size: 1rem;
+  line-height: 1.6;
+  white-space: pre-wrap;        /* keeps indentation and new lines, still wraps */
+  overflow-wrap: anywhere;
+  tab-size: 4;
+}
+.code code { font-family: inherit; }
+
+.options-set { margin: 0; padding: 0; border: 0; min-width: 0; }
+.options-set legend { margin-bottom: 0.5rem; padding: 0; color: var(--muted); font-weight: 600; }
+.options { display: grid; gap: 0.65rem; }
+
+.option {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  min-width: 0;
+  min-height: 48px;
+  padding: 0.75rem 1rem;
+  border: 2px solid var(--option-border);
+  border-radius: 12px;
+  cursor: pointer;
+}
+.option:hover { background: var(--surface-3); }
+.option:focus-within { outline: 3px solid var(--focus); outline-offset: 2px; }
+.option.selected { border-color: var(--accent); background: var(--surface-3); }
+
+/* Custom radio button: a clear ring, with a filled dot when chosen */
+.option input {
+  -webkit-appearance: none;
+  appearance: none;
+  display: grid;
+  flex: none;
+  place-content: center;
+  width: 1.4rem;
+  height: 1.4rem;
+  margin: 0.1rem 0 0;
+  border: 2px solid var(--outline-btn);
+  border-radius: 50%;
+  background: transparent;
+}
+.option input::before {
+  content: "";
+  width: 0.7rem;
+  height: 0.7rem;
+  border-radius: 50%;
+  background: var(--accent);
+  transform: scale(0);
+}
+.option input:checked { border-color: var(--accent); }
+.option input:checked::before { transform: scale(1); }
+
+.option-letter { flex: none; font-weight: 800; color: var(--muted); }
+.option-text { flex: 1; min-width: 0; overflow-wrap: anywhere; }
+.option-text.is-code { font-family: var(--font-code); white-space: pre-wrap; }
+.option-badge { flex: none; align-self: center; font-size: 0.9rem; font-weight: 800; }
+
+.option.correct { border-color: var(--good); background: var(--good-bg); cursor: default; }
+.option.correct .option-badge { color: var(--good); }
+.option.incorrect { border-color: var(--bad); background: var(--bad-bg); cursor: default; }
+.option.incorrect .option-badge { color: var(--bad); }
+.options.locked .option { cursor: default; }
+.options.locked .option:not(.correct):not(.incorrect):hover { background: transparent; }
+
+.hint-area { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem 1rem; margin-top: 1.25rem; }
+.hint-area .small { flex: 1 1 12rem; min-width: 0; }
+.hints { margin: 0.75rem 0 0; padding: 0; list-style: none; }
+.hints:empty { display: none; }
+.hints li {
+  margin-bottom: 0.5rem;
+  padding: 0.65rem 0.9rem;
+  border-left: 4px solid var(--warn);
+  border-radius: 0 10px 10px 0;
+  background: var(--surface-3);
+  overflow-wrap: anywhere;
+}
+.hints strong { color: var(--warn); }
+
+/* ---------- 6. Feedback ---------- */
+.feedback { margin-top: 1.25rem; padding: 1rem 1.1rem; border-radius: 12px; border-left: 6px solid; }
+.feedback.correct { border-color: var(--good); background: var(--good-bg); }
+.feedback.incorrect { border-color: var(--bad); background: var(--bad-bg); }
+.feedback-title { margin-bottom: 0.4rem; font-size: 1.2rem; font-weight: 800; }
+.feedback.correct .feedback-title { color: var(--good); }
+.feedback.incorrect .feedback-title { color: var(--bad); }
+.feedback p:last-child { margin-bottom: 0; }
+.feedback p { overflow-wrap: anywhere; }
+
+/* ---------- 7. Results screen ---------- */
+.big-score { margin-bottom: 0.5rem; font-size: clamp(2.5rem, 12vw, 4.5rem); font-weight: 800; line-height: 1.05; }
+.out-of { color: var(--muted); font-size: 0.3em; font-weight: 600; }
+.result-list { margin: 0; padding: 0; list-style: none; display: grid; gap: 0.6rem; }
+.result-item {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.25rem 1rem;
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--border);
+  border-left-width: 6px;
+  border-radius: 10px;
+  overflow-wrap: anywhere;
+}
+.result-item.correct { border-left-color: var(--good); }
+.result-item.incorrect { border-left-color: var(--bad); }
+.result-name { font-weight: 700; }
+.result-status { font-weight: 800; }
+.result-item.correct .result-status { color: var(--good); }
+.result-item.incorrect .result-status { color: var(--bad); }
+.result-meta { width: 100%; margin: 0; color: var(--muted); font-size: 0.95rem; }
+.revisit-list { margin: 0 0 1.75rem; padding-left: 1.25rem; overflow-wrap: anywhere; }
+.revisit-list li { margin-bottom: 0.4rem; }
+
+/* ---------- 8. Accessibility helpers ---------- */
+.skip-link {
+  position: absolute;
+  left: 0.5rem;
+  top: 0;
+  z-index: 10;
+  max-width: calc(100% - 1rem);
+  padding: 0.6rem 1rem;
+  border-radius: 8px;
+  background: var(--warn);
+  color: #0d1028;
+  font-weight: 700;
+  transform: translateY(-150%);   /* hides it by its own height, however much the text wraps */
+}
+.skip-link:focus { transform: translateY(0.5rem); }
+
+/* Text for screen readers only (visually hidden, still read aloud). */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Headings receive focus from the script, so no outline is needed on them.
+   The feedback box DOES keep a visible ring, because keyboard users land on it. */
+[tabindex="-1"]:focus { outline: none; }
+.feedback[tabindex="-1"]:focus { outline: 3px solid var(--focus); outline-offset: 3px; }
+
+/* ---------- 9. Small screens & zoom ---------- */
+/* On narrower screens the "Correct answer" / "Your answer" badge drops onto its
+   own line, so it cannot squeeze the answer text into a thin column. */
+@media (max-width: 40em) {
+  .option { flex-wrap: wrap; }
+  .option-text { flex: 1 1 0; }
+  .option-badge { flex: 0 0 100%; padding-left: 2.15rem; align-self: auto; }
+}
+
+@media (max-width: 30em) {
+  .actions .btn,
+  .hint-area .btn { flex: 1 1 100%; }
+  .btn-large { width: 100%; }
+  .option { padding: 0.65rem 0.8rem; }
+  .option-text.is-code { font-size: 0.875rem; }
+  .logo { width: 3.25rem; height: 3.25rem; font-size: 1.25rem; }
+}
+
+/* Very narrow viewports. This is also what a 320px phone becomes at 200% zoom. */
+@media (max-width: 20em) {
+  .app { padding-inline: 0.35rem; }
+  .card { padding: 0.9rem; border-radius: 12px; }
+  .code { padding: 0.75rem; font-size: 0.9rem; }
+  .chips li { padding: 0.3rem 0.7rem; }
+  .btn { padding-inline: 0.9rem; }
+}
+
+/* Windows "High Contrast" mode: use system colours so nothing disappears */
+@media (forced-colors: active) {
+  .option input::before { background: CanvasText; }
+  .option input:checked { border-color: Highlight; }
+  .progress { border: 1px solid CanvasText; }
+  .progress-fill { background: Highlight; }
+  .feedback { border: 2px solid CanvasText; }
+}
+
+/* ---------- 10. Motion (only if the user has not asked for less) ---------- */
+@media (prefers-reduced-motion: no-preference) {
+  .screen { animation: fade-in 0.3s ease-out; }
+  .progress-fill { transition: width 0.4s ease; }
+  .btn { transition: background-color 0.15s ease; }
+  .stat strong.bump { animation: bump 0.4s ease; }
+  @keyframes fade-in { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+  @keyframes bump { 50% { transform: scale(1.3); } }
+}
